@@ -1,5 +1,10 @@
 # my_harness_for_codex
 
+![JavaScript](https://img.shields.io/badge/JavaScript-ES2020-yellow.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
+
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/teinam)
+
 Codex 전용 개인 프로그래밍 하네스.
 
 Claude Code 하네스의 `agents/`, `commands/`, hooks를 그대로 옮기지 않고 Codex가 실제로 읽는 표면으로 줄였다.
