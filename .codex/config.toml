@@ -1,0 +1,13 @@
+# Project-local Codex config example.
+# Keep this boring. Put behavior in AGENTS.md, workflows in .agents/skills.
+
+sandbox_mode = "workspace-write"
+approval_policy = "on-request"
+
+project_doc_max_bytes = 32768
+
+[sandbox_workspace_write]
+network_access = false
+
+[features]
+hooks = true

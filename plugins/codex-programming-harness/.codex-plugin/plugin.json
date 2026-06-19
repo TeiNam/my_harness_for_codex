@@ -1,0 +1,33 @@
+{
+  "name": "codex-programming-harness",
+  "version": "0.1.0",
+  "description": "A small Codex-native programming harness with focused skills for implementation, debugging, review, and language-specific work.",
+  "author": {
+    "name": "tei"
+  },
+  "homepage": "https://github.com/TeiNam/my_harness_for_codex",
+  "repository": "https://github.com/TeiNam/my_harness_for_codex",
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "programming",
+    "skills",
+    "harness"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Codex Programming Harness",
+    "shortDescription": "Small Codex-native programming workflows.",
+    "longDescription": "A focused Codex programming harness packaged as a plugin. It adds repo-independent skills for implementation, debugging, review, Python, TypeScript/React, Rust, database work, frontend QA, and harness maintenance.",
+    "developerName": "tei",
+    "category": "Productivity",
+    "capabilities": [
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Implement this with the smallest verified diff.",
+      "Debug this failing test or build log.",
+      "Review this change for serious issues."
+    ]
+  }
+}

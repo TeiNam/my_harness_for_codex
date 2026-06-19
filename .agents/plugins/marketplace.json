@@ -1,0 +1,20 @@
+{
+  "name": "codex-harnesses",
+  "interface": {
+    "displayName": "Codex Harnesses"
+  },
+  "plugins": [
+    {
+      "name": "codex-programming-harness",
+      "source": {
+        "source": "local",
+        "path": "./plugins/codex-programming-harness"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
