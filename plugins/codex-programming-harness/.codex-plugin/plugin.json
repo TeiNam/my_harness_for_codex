@@ -1,7 +1,7 @@
 {
   "name": "codex-programming-harness",
-  "version": "0.1.0",
-  "description": "A small Codex-native programming harness with focused skills for implementation, debugging, review, and language-specific work.",
+  "version": "0.2.0",
+  "description": "Focused Codex skills for programming, security review, deployment, technical writing, and data analysis.",
   "author": {
     "name": "tei"
   },
@@ -17,8 +17,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Codex Programming Harness",
-    "shortDescription": "Small Codex-native programming workflows.",
-    "longDescription": "A focused Codex programming harness packaged as a plugin. It adds repo-independent skills for implementation, debugging, review, Python, TypeScript/React, Rust, database work, frontend QA, and harness maintenance.",
+    "shortDescription": "Focused development, writing, and analysis workflows.",
+    "longDescription": "A focused Codex harness with skills for implementation, debugging, review, Python, TypeScript/React, Rust, databases, frontend QA, onboarding, security, deployment, benchmarks, technical writing, data analysis, and harness maintenance.",
     "developerName": "tei",
     "category": "Productivity",
     "capabilities": [

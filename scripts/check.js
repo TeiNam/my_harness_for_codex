@@ -10,6 +10,7 @@ const required = [
   ".codex/config.toml",
   ".agents/plugins/marketplace.json",
   "plugins/codex-programming-harness/.codex-plugin/plugin.json",
+  "plugins/codex-programming-harness/LICENSE",
   ".agents/skills/codex-implementation-loop/SKILL.md",
   ".agents/skills/codex-debug-fix/SKILL.md",
   ".agents/skills/codex-review/SKILL.md",
@@ -19,6 +20,12 @@ const required = [
   ".agents/skills/rust-codex/SKILL.md",
   ".agents/skills/database-codex/SKILL.md",
   ".agents/skills/frontend-qa-codex/SKILL.md",
+  ".agents/skills/codebase-onboarding-codex/SKILL.md",
+  ".agents/skills/security-review-codex/SKILL.md",
+  ".agents/skills/deployment-codex/SKILL.md",
+  ".agents/skills/benchmark-codex/SKILL.md",
+  ".agents/skills/technical-writing-codex/SKILL.md",
+  ".agents/skills/data-analysis-codex/SKILL.md",
 ];
 
 let failed = false;
@@ -31,18 +38,32 @@ for (const rel of required) {
   }
 }
 
+if (failed) process.exit(1);
+
 function checkSkills(relDir) {
   const skillDir = path.join(root, relDir);
   for (const name of fs.readdirSync(skillDir)) {
     const file = path.join(skillDir, name, "SKILL.md");
+    if (!fs.existsSync(file)) {
+      console.error(`missing: ${path.relative(root, file)}`);
+      failed = true;
+      continue;
+    }
     const text = fs.readFileSync(file, "utf8");
-    if (!/^---\n[\s\S]*\n---\n/.test(text)) {
+    const frontmatter = text.match(/^---\n([\s\S]*?)\n---\n/)?.[1] || "";
+    if (!frontmatter) {
       console.error(`missing frontmatter: ${path.relative(root, file)}`);
       failed = true;
     }
-    if (!/^name: .+$/m.test(text) || !/^description: .+$/m.test(text)) {
+    if (!/^name: .+$/m.test(frontmatter) || !/^description: .+$/m.test(frontmatter)) {
       console.error(`missing name/description: ${path.relative(root, file)}`);
       failed = true;
+    }
+    for (const [, reference] of text.matchAll(/\[[^\]]*\]\((references\/[^)#\s]+)(?:#[^)\s]+)?\)/g)) {
+      if (!fs.existsSync(path.join(skillDir, name, reference))) {
+        console.error(`missing skill reference: ${path.relative(root, file)} -> ${reference}`);
+        failed = true;
+      }
     }
   }
 }
@@ -114,18 +135,33 @@ if (pluginEntry?.policy?.authentication !== "ON_INSTALL") {
 
 const repoSkills = path.join(root, ".agents", "skills");
 const pluginSkills = path.join(root, "plugins", "codex-programming-harness", "skills");
-for (const name of fs.readdirSync(repoSkills)) {
-  const repoFile = path.join(repoSkills, name, "SKILL.md");
-  const pluginFile = path.join(pluginSkills, name, "SKILL.md");
-  if (!fs.existsSync(pluginFile)) {
-    console.error(`plugin missing copied skill: ${name}`);
+
+function filesUnder(dir, prefix = "") {
+  return fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const rel = path.join(prefix, entry.name);
+    return entry.isDirectory() ? filesUnder(path.join(dir, entry.name), rel) : [rel];
+  });
+}
+
+const repoFiles = new Set(filesUnder(repoSkills));
+const pluginFiles = new Set(filesUnder(pluginSkills));
+for (const rel of new Set([...repoFiles, ...pluginFiles])) {
+  if (!repoFiles.has(rel) || !pluginFiles.has(rel)) {
+    console.error(`skill file missing from ${repoFiles.has(rel) ? "plugin" : "repo"}: ${rel}`);
     failed = true;
     continue;
   }
-  if (fs.readFileSync(repoFile, "utf8") !== fs.readFileSync(pluginFile, "utf8")) {
-    console.error(`plugin skill out of sync: ${name}`);
+  if (!fs.readFileSync(path.join(repoSkills, rel)).equals(fs.readFileSync(path.join(pluginSkills, rel)))) {
+    console.error(`plugin skill out of sync: ${rel}`);
     failed = true;
   }
+}
+
+if (!fs.readFileSync(path.join(root, "LICENSE")).equals(
+  fs.readFileSync(path.join(root, "plugins/codex-programming-harness/LICENSE")),
+)) {
+  console.error("plugin license out of sync");
+  failed = true;
 }
 
 if (failed) process.exit(1);
