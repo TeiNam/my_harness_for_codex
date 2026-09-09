@@ -16,3 +16,5 @@ Keep UI code predictable and typed at the boundary.
 7. Verify with the project's smallest script: typecheck, lint, unit test, or targeted browser check.
 
 Avoid styling rewrites, design-system invention, and new dependencies unless the existing stack already uses them.
+
+For Vite configuration or environment changes, read [Vite boundaries](references/vite.md). For Obsidian lifecycle, vault, settings, or release work, read [Obsidian boundaries](references/obsidian.md). Do not load either reference for unrelated React changes.

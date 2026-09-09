@@ -16,3 +16,8 @@ Prefer boring Python.
 7. Run the narrowest relevant command first, such as one test file, then broaden only if needed.
 
 Avoid new frameworks, global config systems, or class hierarchies for single-use logic.
+
+Read only the reference relevant to the change:
+
+- [FastAPI and async resource boundaries](references/fastapi.md) for routes, dependency overrides, lifespan, or async clients.
+- [Test isolation](references/testing.md) for mocks, external side effects, or async regression tests.

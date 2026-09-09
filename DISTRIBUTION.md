@@ -41,11 +41,13 @@ codex plugin marketplace add .
 
 ## Updating
 
-When repo skills change, copy them into the plugin skills folder and run:
+When repo skills change, copy each entire skill directory into the plugin skills folder, including references, scripts, and assets. Remove retired files from both locations and keep the root `LICENSE` copied to the plugin root. Then run:
 
 ```bash
 node scripts/check.js
 ```
+
+The checker compares the full skill trees and license notices; it also checks linked references in each `SKILL.md`. If the checker changes, run `node scripts/check.test.js`.
 
 If you have Codex's `plugin-creator` skill installed locally, you can also run its `validate_plugin.py` against `plugins/codex-programming-harness`.
 

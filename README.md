@@ -5,7 +5,7 @@
 
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/teinam)
 
-Codex 전용 개인 프로그래밍 하네스.
+Codex 전용 개인 개발·기술문서·데이터 분석 하네스.
 
 Claude Code 하네스의 `agents/`, `commands/`, hooks를 그대로 옮기지 않고 Codex가 실제로 읽는 표면으로 줄였다.
 
@@ -19,6 +19,7 @@ Claude Code 하네스의 `agents/`, `commands/`, hooks를 그대로 옮기지 �
 | `plugins/codex-programming-harness/` | 배포용 Codex plugin 패키지. |
 | `.codex/config.toml` | 프로젝트 Codex 설정 예시. |
 | `scripts/check.js` | 하네스 구조 검증. |
+| `PORTING.md` | Claude 원본에서 가져온 내용, 합친 내용, 제외한 내용과 출처. |
 | `codex-vs-claude-code-harness.md` | Claude Code와 Codex 하네스 차이 정리. |
 
 ## 스킬
@@ -32,14 +33,39 @@ Claude Code 하네스의 `agents/`, `commands/`, hooks를 그대로 옮기지 �
 - `rust-codex` - Rust, Cargo, ownership/trait/안전성
 - `database-codex` - SQL/NoSQL 스키마, migration, index
 - `frontend-qa-codex` - 브라우저/반응형/시각 검증
+- `codebase-onboarding-codex` - 코드베이스 구조·요청 흐름 파악, 요청 시 AGENTS.md 작성
+- `security-review-codex` - 인증·인가·입력·민감정보 경계 검토
+- `deployment-codex` - Docker/Compose·CI/CD·배포·롤백
+- `benchmark-codex` - 재현 가능한 성능 비교
+- `technical-writing-codex` - 한/영 기술문서 작성·윤문
+- `data-analysis-codex` - 데이터 검증·지표 분석·실험 해석
 
-Codex는 `.agents/skills/*/SKILL.md`의 `name`과 `description`을 먼저 보고, 필요할 때 전체 스킬을 읽는다. 그래서 스킬은 작게 유지한다.
+Codex는 `.agents/skills/*/SKILL.md`의 `name`과 `description`을 먼저 보고, 필요할 때 전체 스킬을 읽는다. 그래서 스킬은 작게 유지한다. FastAPI·테스트 격리·UI 상태 전이·Vite·Obsidian의 세부 지침은 해당 스킬이 연결하는 `references/`에서 필요할 때만 읽는다.
+
+예를 들어 다음처럼 요청한다:
+
+```text
+$codebase-onboarding-codex 이 저장소의 요청 흐름과 수정 지점을 설명해줘.
+$security-review-codex 이번 인증 변경에서 다른 사용자의 데이터에 접근할 수 있는지 검토해줘.
+$technical-writing-codex 이 README의 기술적 의미를 유지하면서 한국어를 다듬어줘.
+$data-analysis-codex 지난달 전환율 하락을 세그먼트별로 분석해줘.
+```
+
+Claude 원본의 스킬 115개 중 독립 워크플로 6개를 새 스킬로 정리하고, 겹치는 지침은 기존 스킬에 합쳤다. 선택 기준과 원본 대응표는 [PORTING.md](PORTING.md)에 있다.
 
 ## 검증
 
 ```bash
 node scripts/check.js
 ```
+
+검증 스크립트를 수정했을 때:
+
+```bash
+node scripts/check.test.js
+```
+
+구조 검증은 스킬 본문과 참조 파일의 배포본 일치, 참조 파일 존재, 라이선스 일치를 확인한다. 실제 작업에서의 스킬 선택과 결과 품질까지 보장하지는 않는다.
 
 ## 배포
 

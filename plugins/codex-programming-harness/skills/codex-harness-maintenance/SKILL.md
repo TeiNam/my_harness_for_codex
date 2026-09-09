@@ -21,5 +21,9 @@ When porting from Claude Code:
 - Convert slash commands into skills only when the workflow is reusable.
 - Do not port Claude subagents one-for-one. Codex subagents should be added only for noisy, specialized delegation.
 - Do not port hooks until a rule must be mechanically enforced.
+- Merge overlapping guidance into an existing skill. Put substantial conditional detail in linked references and preserve source license notices.
+- Replace source-specific tool names and paths with capabilities available in the target session; verify version-dependent instructions against official documentation.
 
-Run `node scripts/check.js` after changing harness structure.
+In this harness repository, mirror each skill's entire directory into the existing plugin package, including references and assets. Keep the package license notices in sync.
+
+Run `node scripts/check.js` after changing harness structure. Run `node scripts/check.test.js` when changing the checker itself.

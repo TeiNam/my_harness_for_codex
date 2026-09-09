@@ -16,3 +16,5 @@ Make the compiler do the work.
 7. Run `cargo test` for the narrowest package or test target first; run broader checks only when touched code crosses crates.
 
 Prefer deleting generic traits/macros when there is one implementation.
+
+For concurrent code, keep lock scopes short and release synchronous guards before awaiting. Bound queues when producers can outrun consumers. Observe spawned task results and define shutdown/cancellation behavior; dropping a task handle must not be assumed to cancel its work. Use the project's runtime and error conventions rather than adding another one.
